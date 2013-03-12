@@ -7,11 +7,11 @@ using MSExcel = Microsoft.Office.Interop.Excel;
 
 namespace Parser
 {
-    class Cost : ICollection<uint>
+    class Cost : ICollection<UInt64>
     {
         public Cost()
         {
-            costs_ = new List<uint>();
+            costs_ = new List<UInt64>();
         }
 
         // ICollection<> interfaces
@@ -31,7 +31,7 @@ namespace Parser
             }
         }
 
-        public void Add(uint c)
+        public void Add(UInt64 c)
         {
             costs_.Add(c);
         }
@@ -41,23 +41,23 @@ namespace Parser
             costs_.Clear();
         }
 
-        public bool Contains(uint c)
+        public bool Contains(UInt64 c)
         {
             return costs_.Contains(c);
         }
 
-        public void CopyTo(uint[] array, int arrayIndex)
+        public void CopyTo(UInt64[] array, int arrayIndex)
         {
             costs_.CopyTo(array, arrayIndex);
         }
 
-        public bool Remove(uint c)
+        public bool Remove(UInt64 c)
         {
             return costs_.Remove(c);
         }
 
         // IEnumerable<> interface
-        public IEnumerator<uint> GetEnumerator()
+        public IEnumerator<UInt64> GetEnumerator()
         {
             return costs_.GetEnumerator();
         }
@@ -68,7 +68,7 @@ namespace Parser
             return costs_.GetEnumerator();
         }
 
-        private List<uint> costs_;
+        private List<UInt64> costs_;
     }
 
     class Para2Cost : ICollection<KeyValuePair<string, Cost>>
@@ -83,7 +83,7 @@ namespace Parser
         /// </summary>
         /// <param name="strPara">性能测试中某个统计函数的参数值</param>
         /// <param name="c">改参数对应的客户端处理时间</param>
-        public void Add(string strPara, uint c)
+        public void Add(string strPara, UInt64 c)
         {
             if (!para2Cost_.ContainsKey(strPara))
             {
@@ -271,13 +271,13 @@ namespace Parser
             Debug.Assert(3 == beginGroups.Count);
             Debug.Assert(2 == endGroups.Count);
 
-            uint tickcntEnd = Convert.ToUInt32(endGroups[1].Value);
-            uint tickcntBegin = 0;
+            UInt64 tickcntEnd = Convert.ToUInt64(endGroups[1].Value);
+            UInt64 tickcntBegin = 0;
             string paraAndCost = beginGroups[2].Value;
             int idx = paraAndCost.LastIndexOf('.');
             tickcntBegin = Convert.ToUInt32(paraAndCost.Substring(++idx));
 
-            uint tick = tickcntEnd - tickcntBegin;
+            UInt64 tick = tickcntEnd - tickcntBegin;
             if (0 == tick && simpleMode_)
             {
                 return;
